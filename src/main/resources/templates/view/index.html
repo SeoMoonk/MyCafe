@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Main</title>
+
+    <!-- 데이지 UI 불러오기 -->
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@2.51.5/dist/full.css" rel="stylesheet" type="text/css"/>
+    <!-- 테일윈드 불러오기 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <div class="flex justify-center">
+        <h1 class="text-xl">Main Page</h1>
+    </div>
+
+
+    <div class="flex justify-center">
+        <a class="btn btn-outline btn-warning mr-4" href="member/join">
+            <h3>회원가입</h3>
+        </a>
+
+        <!-- 로그인 버튼 -->
+        <a class="btn btn-outline btn-primary mr-4" sec:authorize="isAnonymous()"
+           th:href="@{/member/login}">
+            <h3>로그인</h3>
+        </a>
+
+        <!-- 로그아웃 버튼 -->
+        <a class="btn btn-outline btn-primary mr-4" sec:authorize="isAuthenticated()"
+           th:href="@{/member/logout}">
+            <h3>로그아웃</h3>
+        </a>
+
+        <a class="btn btn-outline btn-success mr-4" href="/cafe/create">
+            <h3>카페 만들기</h3>
+        </a>
+        <a class="btn btn-outline btn-info mr-4" href="#">
+            <h3>게시물 작성하기</h3>
+        </a>
+    </div>
+
+    <div th:if="${#lists.isEmpty(cafeList)}">
+        <h3>아직 아무 카페도 없어요!</h3>
+    </div>
+
+    <div class="ml-10 grid grid-cols-1 md:grid-cols-3 xl:grid-cols-3 gap-[50px]" th:if="${cafeList}">
+        <div class="card w-72 bg-base-100 shadow-xl" th:each="cafe:${cafeList}" >
+            <figure>
+                <img src="https://kr.object.ncloudstorage.com/calocheck/sample/sample_img_no.png" alt="cafeImage" />
+            </figure>
+            <div class="divider"></div>
+            <div class="card-body">
+                <h2 class="card-title" th:text="${cafe.cafeName}"></h2>
+                <p th:text="${cafe.introduction}"></p>
+            </div>
+            <div class="card-actions justify-center mb-4">
+                <div class="badge badge-outline" th:text="${cafe.isOpen.getState() == 'public' ? '공개' : '비공개'}"></div>
+                <div class="badge badge-outline" th:text="${cafe.nameType.getNameType() == 'nickname' ? '닉네임' : '실명제'}"></div>
+                <div class="badge badge-outline" th:switch="${cafe.subject.getSubject()}">
+                    <span th:case="'travel'">여행</span>
+                    <span th:case="'food'">음식</span>
+                    <span th:case="'study'">공부</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

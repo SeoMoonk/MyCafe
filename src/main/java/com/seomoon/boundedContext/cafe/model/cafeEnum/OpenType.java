@@ -13,5 +13,4 @@ public enum OpenType {
     OpenType(String state) {
         this.state = state;
     }
-
 }

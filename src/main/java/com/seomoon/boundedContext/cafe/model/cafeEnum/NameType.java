@@ -13,13 +13,4 @@ public enum NameType {
     NameType(String nameType) {
         this.nameType = nameType;
     }
-
-    public NameType getNameType(String nameCode) {
-
-        if(nameCode.equals("nickname")){
-            return NameType.NICK_NAME;
-        } else {
-            return NameType.REAL_NAME;
-        }
-    }
 }

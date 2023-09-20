@@ -14,15 +14,4 @@ public enum CafeSubject {
     CafeSubject(String subject) {
         this.subject = subject;
     }
-
-    public CafeSubject getNameType(String subjectCode) {
-
-        if(subjectCode.equals("travel")){
-            return CafeSubject.TRAVEL;
-        } else if(subjectCode.equals("food")){
-            return CafeSubject.FOOD;
-        } else{
-            return CafeSubject.STUDY;
-        }
-    }
 }
