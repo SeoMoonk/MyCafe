@@ -22,7 +22,7 @@ public class MemberController {
     @GetMapping("/join")
     public String joinForm(MemberJoinForm memberJoinForm) {
 
-        return "view/joinForm";
+        return "view/member/joinForm";
     }
 
     @PostMapping("/join")
@@ -30,7 +30,7 @@ public class MemberController {
                        BindingResult bindingResult) {
 
         if(bindingResult.hasErrors()){
-            return "view/joinForm";
+            return "view/member/joinForm";
         }
 
         Map<String, String> joinResultMap = memberService.createMember(memberJoinForm);
@@ -42,7 +42,7 @@ public class MemberController {
 
             bindingResult.reject("global.error", failCode + ": " + failMsg);
 
-            return "view/joinForm";
+            return "view/member/joinForm";
         }
 
         return "redirect:/";
@@ -51,21 +51,15 @@ public class MemberController {
     @GetMapping("/login")
     public String loginForm() {
 
-        return "view/loginForm";
+        return "view/member/loginForm";
     }
 
-    /* @PostMapping 방식의 메서드는 스프링 시큐리티가 대신 처리하므로 직접 구현할 필요가 없다.
+    /* @PostMapping 방식의 login 메서드는 스프링 시큐리티가 대신 처리하므로 직접 구현할 필요가 없다.
     @PostMapping("/login")
     public String login(@Valid MemberLoginForm memberLoginForm,
                         BindingResult bindingResult) {
 
         return "redirect:/";
     }*/
-
-    @GetMapping("/logout")
-    public String logout() {
-
-        return "/";
-    }
 
 }

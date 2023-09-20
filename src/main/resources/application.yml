@@ -33,3 +33,8 @@ logging:
     org:
       hibernate: info
       thymeleaf: off
+
+#custom
+custom:
+  cafe:
+    memberLimit: 100

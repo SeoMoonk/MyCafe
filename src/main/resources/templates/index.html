@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Main</title>
@@ -11,9 +11,19 @@
         <a class="btn btn-outline btn-warning" href="member/join">
             <h3>회원가입</h3>
         </a>
-        <a class="btn btn-outline btn-primary" href="/member/login">
+
+        <!-- 로그인 버튼 -->
+        <a class="btn btn-outline btn-primary" sec:authorize="isAnonymous()"
+           th:href="@{/member/login}">
             <h3>로그인</h3>
         </a>
+
+        <!-- 로그아웃 버튼 -->
+        <a class="btn btn-outline btn-primary" sec:authorize="isAuthenticated()"
+           th:href="@{/member/logout}">
+            <h3>로그아웃</h3>
+        </a>
+
         <a class="btn btn-outline btn-success" href="/cafe/create">
             <h3>카페 만들기</h3>
         </a>

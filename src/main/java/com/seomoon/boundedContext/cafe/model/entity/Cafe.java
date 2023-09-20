@@ -1,5 +1,6 @@
-package com.seomoon.boundedContext.cafe.entity;
+package com.seomoon.boundedContext.cafe.model.entity;
 
+import com.seomoon.base.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -13,23 +14,25 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @SuperBuilder(toBuilder = true)
 @ToString(callSuper = true)
-public class Cafe {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Cafe extends BaseEntity {
 
     private String cafeName;
 
-    private String cafeIntroduction;
+    private String introduction;
 
     private int cafeMemberLimit;
 
+    @Enumerated(EnumType.STRING)
+    private OpenType isOpen;
+
+    @Enumerated(EnumType.STRING)
+    private NameType nameType;
+
+    @Enumerated(EnumType.STRING)
+    private CafeSubject subject;
+
 //    @OneToMany(mappedBy = "linkedCafe")
 //    private List<Post> cafePostList;
-
-    @CreatedDate
-    private LocalDateTime createDate;
 
 //    private Img cafeImg;
 //    private String cafeTag;
