@@ -1,12 +1,17 @@
 package com.seomoon.boundedContext.member.controller;
 
+import com.seomoon.boundedContext.member.model.MemberJoinForm;
 import com.seomoon.boundedContext.member.service.MemberService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -16,30 +21,52 @@ public class MemberController {
     private final MemberService memberService;
 
     @GetMapping("/join")
-    public String joinForm() {
+    public String joinForm(MemberJoinForm memberJoinForm) {
 
-        return "/view/joinForm";
+        return "view/joinForm";
     }
 
     @PostMapping("/join")
-    public String join(@RequestParam(value = "loginId") String loginId,
-                       @RequestParam(value = "password") String password,
-                       @RequestParam(value = "nickname") String nickname) {
+    public String join(@Valid MemberJoinForm memberJoinForm,
+                       BindingResult bindingResult) {
 
-        String createRsCode = memberService.createMember(loginId, password, nickname);
-
-        if(createRsCode.startsWith("F")){
-            //실패
-            //FIXME
-            //RedirectAttributes attr;
-
-            return "redirect:/view/joinForm";
-        } else {
-            //성공
-            return "redirect:/";
+        if(bindingResult.hasErrors()){
+            return "view/joinForm";
         }
 
+        Map<String, String> joinResultMap = memberService.createMember(memberJoinForm);
 
+        if(joinResultMap.get("code").startsWith("F")){
+
+            String failCode = joinResultMap.get("code");
+            String failMsg = joinResultMap.get("msg");
+
+            bindingResult.reject("global.error", failCode + ": " + failMsg);
+
+            return "view/joinForm";
+        }
+
+        return "redirect:/";
+    }
+
+    @GetMapping("/login")
+    public String loginForm() {
+
+        return "view/loginForm";
+    }
+
+    @PostMapping("/login")
+    public String login() {
+
+        //todo login service
+
+        return "redirect:/";
+    }
+
+    @GetMapping("/logout")
+    public String logout() {
+
+        return "/";
     }
 
 }

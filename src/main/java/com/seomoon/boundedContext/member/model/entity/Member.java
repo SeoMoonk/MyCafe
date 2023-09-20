@@ -1,4 +1,4 @@
-package com.seomoon.boundedContext.member.entity;
+package com.seomoon.boundedContext.member.model.entity;
 
 import com.seomoon.base.entity.BaseEntity;
 import jakarta.persistence.*;

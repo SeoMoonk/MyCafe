@@ -1,11 +1,15 @@
 package com.seomoon.boundedContext.member.service;
 
-import com.seomoon.boundedContext.member.entity.Member;
+import com.seomoon.boundedContext.member.model.MemberJoinForm;
+import com.seomoon.boundedContext.member.model.entity.Member;
 import com.seomoon.boundedContext.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -14,40 +18,60 @@ import java.util.Optional;
 public class MemberService {
 
     private final MemberRepository memberRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Transactional
-    public String createMember(String loginId, String password, String nickname){
+    public Map<String, String> createMember(MemberJoinForm memberJoinForm){
 
-        if(checkValidJoin(loginId, nickname)){
+        String loginId = memberJoinForm.getLoginId();
+        String password1 = memberJoinForm.getPassword1();
+        String password2 = memberJoinForm.getPassword2();
+        String nickname = memberJoinForm.getNickname();
 
+        Map<String, String> checkResultMap = checkValidJoin(loginId, password1, password2, nickname);
+
+        if(checkResultMap.get("code").startsWith("S")){
             Member member = Member.builder()
                     .loginId(loginId)
-                    .password(password) //TODO PasswordEncorder from security
+                    .password(passwordEncoder.encode(password1)) //TODO PasswordEncorder from security
                     .nickname(nickname)
                     .build();
 
             memberRepository.save(member);
-
-            return "S-1";
-        }else{
-            return "F-1";
         }
 
+        return checkResultMap;
     }
 
-    public boolean checkValidJoin(String loginId, String nickname){
+    public Map<String, String> checkValidJoin(String loginId, String password1, String password2, String nickname){
+
+        Map<String, String> resultMap = new HashMap<>();
+
+        String code = "S-1";
+        String msg = "유효한 폼 입니다.";
 
         Optional<Member> ObyId = memberRepository.findByLoginId(loginId);
         if(ObyId.isPresent()){
-            return false;
+            code = "F-1";
+            msg = "이미 사용중인 아이디 입니다.";
         }
 
         Optional<Member> ObyNickname = memberRepository.findByNickname(nickname);
         if(ObyNickname.isPresent()){
-            return false;
+
+            code = "F-2";
+            msg = "이미 사용중인 닉네임 입니다.";
         }
 
-        return true;
+        if(!password1.equals(password2)){
+            code = "F-3";
+            msg = "두가지 비밀번호가 일치하지 않습니다.";
+        }
+
+        resultMap.put("code", code);
+        resultMap.put("msg", msg);
+
+        return resultMap;
     }
 
 
