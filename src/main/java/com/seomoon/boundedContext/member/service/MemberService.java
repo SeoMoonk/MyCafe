@@ -1,16 +1,21 @@
 package com.seomoon.boundedContext.member.service;
 
-import com.seomoon.boundedContext.member.model.MemberJoinForm;
+import com.seomoon.boundedContext.member.model.form.MemberJoinForm;
 import com.seomoon.boundedContext.member.model.entity.Member;
+import com.seomoon.boundedContext.member.model.role.MemberRole;
 import com.seomoon.boundedContext.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -28,9 +33,9 @@ public class MemberService {
         String password2 = memberJoinForm.getPassword2();
         String nickname = memberJoinForm.getNickname();
 
-        Map<String, String> checkResultMap = checkValidJoin(loginId, password1, password2, nickname);
+        Map<String, String> checkJoinMap = checkValidJoin(loginId, password1, password2, nickname);
 
-        if(checkResultMap.get("code").startsWith("S")){
+        if(checkJoinMap.get("code").startsWith("S")){
             Member member = Member.builder()
                     .loginId(loginId)
                     .password(passwordEncoder.encode(password1)) //TODO PasswordEncorder from security
@@ -40,7 +45,7 @@ public class MemberService {
             memberRepository.save(member);
         }
 
-        return checkResultMap;
+        return checkJoinMap;
     }
 
     public Map<String, String> checkValidJoin(String loginId, String password1, String password2, String nickname){
@@ -73,7 +78,5 @@ public class MemberService {
 
         return resultMap;
     }
-
-
 
 }

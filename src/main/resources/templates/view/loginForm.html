@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>로그인</title>
+
+    <!-- 데이지 UI 불러오기 -->
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@2.51.5/dist/full.css" rel="stylesheet" type="text/css"/>
+    <!-- 테일윈드 불러오기 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+</head>
+<body>
+
+<form method="post" action="/member/login" class="flex justify-center">
+    <div class="flex flex-col w-2/3 justify-center m-10">
+        <span class="w-48">아이디</span>
+        <input class="input input-bordered" type="text" name="username">
+
+        <span class="inline-flex w-48">비밀번호</span>
+        <input class="input input-bordered" type="password" name="password">
+
+        <div class="mt-10 flex flex-col">
+            <div class="flex justify-center mt-8 mb-8" th:if="${param.error}">
+                <h5 class="alert alert-danger">사용자ID 또는 비밀번호를 확인해 주세요.</h5>
+            </div>
+
+            <div class="flex justify-center">
+                <button class="w-36 btn btn-outline" type="submit">로그인 하기</button>
+                <a class="ml-10 w-36 btn btn-outline btn-warning" href="/">로그인 취소</a>
+            </div>
+        </div>
+
+    </div>
+</form>
+
+</body>
+</html>

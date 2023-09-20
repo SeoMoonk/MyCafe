@@ -1,4 +1,4 @@
-package com.seomoon.boundedContext.member.model;
+package com.seomoon.boundedContext.member.model.form;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
