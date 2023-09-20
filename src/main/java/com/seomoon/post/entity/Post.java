@@ -30,11 +30,11 @@ public class Post {
 
     private String writer;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Cafe linkedCafe;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Member member;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    private Cafe linkedCafe;
+//
+//    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    private Member member;
 
     @CreatedDate
     private LocalDateTime createDate;

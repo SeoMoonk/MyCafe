@@ -30,8 +30,8 @@ public class Cafe {
 
     private int cafeMemberLimit;
 
-    @OneToMany(mappedBy = "linkedCafe")
-    private List<Post> cafePostList;
+//    @OneToMany(mappedBy = "linkedCafe")
+//    private List<Post> cafePostList;
 
     @CreatedDate
     private LocalDateTime createDate;

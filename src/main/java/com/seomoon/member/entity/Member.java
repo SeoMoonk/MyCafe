@@ -1,16 +1,12 @@
 package com.seomoon.member.entity;
 
-import com.seomoon.cafe.entity.Cafe;
-import com.seomoon.cafeMember.entity.CafeMember;
-import com.seomoon.post.entity.Post;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Getter
@@ -18,6 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString(callSuper = true)
+@EntityListeners(AuditingEntityListener.class)
 public class Member {
 
     @Id
@@ -28,13 +25,15 @@ public class Member {
 
     private String password;
 
+    private String nickname;
+
     @CreatedDate
     private LocalDateTime createDate;
 
-    @OneToMany(mappedBy = "member")
-    private List<CafeMember> challengeMemberList;
+/*    @OneToMany(mappedBy = "member")
+    private List<CafeMember> challengeMemberList = new ArrayList<>();
 
     @OneToMany(mappedBy = "member")
-    private List<Post> myPostList = new ArrayList<>();
+    private List<Post> myPostList = new ArrayList<>();*/
 
 }

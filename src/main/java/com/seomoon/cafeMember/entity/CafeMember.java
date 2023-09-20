@@ -26,11 +26,11 @@ public class CafeMember {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Cafe linkedCafe;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    private Cafe linkedCafe;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Member member;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    private Member member;
 
     @Enumerated(EnumType.STRING)
     private Role challengerRole;
