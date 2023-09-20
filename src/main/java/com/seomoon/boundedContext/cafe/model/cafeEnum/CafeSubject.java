@@ -1,4 +1,4 @@
-package com.seomoon.boundedContext.cafe.model.entity;
+package com.seomoon.boundedContext.cafe.model.cafeEnum;
 
 import lombok.Getter;
 

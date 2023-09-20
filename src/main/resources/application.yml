@@ -37,4 +37,4 @@ logging:
 #custom
 custom:
   cafe:
-    memberLimit: 100
+    member_limit: 100

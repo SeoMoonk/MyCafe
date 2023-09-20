@@ -1,9 +1,10 @@
 package com.seomoon.boundedContext.cafe.service;
 
+import com.seomoon.boundedContext.cafe.config.CafeConfigProperties;
 import com.seomoon.boundedContext.cafe.model.entity.Cafe;
-import com.seomoon.boundedContext.cafe.model.entity.CafeSubject;
-import com.seomoon.boundedContext.cafe.model.entity.NameType;
-import com.seomoon.boundedContext.cafe.model.entity.OpenType;
+import com.seomoon.boundedContext.cafe.model.cafeEnum.CafeSubject;
+import com.seomoon.boundedContext.cafe.model.cafeEnum.NameType;
+import com.seomoon.boundedContext.cafe.model.cafeEnum.OpenType;
 import com.seomoon.boundedContext.cafe.model.form.CafeCreateForm;
 import com.seomoon.boundedContext.cafe.repository.CafeRespository;
 import lombok.RequiredArgsConstructor;
@@ -20,13 +21,10 @@ import java.util.Optional;
 public class CafeService {
 
     private final CafeRespository cafeRespository;
+    private final CafeConfigProperties cafeConfigProps;
 
     @Transactional
     public Map<String, String> createCafe(CafeCreateForm cafeCreateForm){
-
-        System.out.println("--".repeat(30));
-        System.out.println(cafeCreateForm.getOpenType());
-        System.out.println("--".repeat(30));
 
         String cafeName = cafeCreateForm.getCafeName();
         String introduction = cafeCreateForm.getIntroduction();
@@ -43,6 +41,7 @@ public class CafeService {
                     .isOpen(openType)
                     .nameType(nameType)
                     .subject(subject)
+                    .memberLimit(cafeConfigProps.getMemberLimit())
                     .build();
 
             cafeRespository.save(newCafe);

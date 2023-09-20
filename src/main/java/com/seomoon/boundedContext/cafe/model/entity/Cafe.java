@@ -1,12 +1,12 @@
 package com.seomoon.boundedContext.cafe.model.entity;
 
 import com.seomoon.base.entity.BaseEntity;
+import com.seomoon.boundedContext.cafe.model.cafeEnum.CafeSubject;
+import com.seomoon.boundedContext.cafe.model.cafeEnum.NameType;
+import com.seomoon.boundedContext.cafe.model.cafeEnum.OpenType;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-import org.springframework.data.annotation.CreatedDate;
-
-import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -20,8 +20,6 @@ public class Cafe extends BaseEntity {
 
     private String introduction;
 
-    private int cafeMemberLimit;
-
     @Enumerated(EnumType.STRING)
     private OpenType isOpen;
 
@@ -30,6 +28,8 @@ public class Cafe extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private CafeSubject subject;
+
+    private int memberLimit;
 
 //    @OneToMany(mappedBy = "linkedCafe")
 //    private List<Post> cafePostList;
