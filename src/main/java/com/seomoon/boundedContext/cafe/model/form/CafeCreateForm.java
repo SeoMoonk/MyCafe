@@ -25,7 +25,6 @@ public class CafeCreateForm {
 
     @NotEmpty
     private String subject;
-
 }
 
 

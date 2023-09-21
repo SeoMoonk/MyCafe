@@ -13,29 +13,26 @@
             <a href="/" class="btn btn-ghost normal-case text-xl">MyCafe</a>
         </div>
         <div class="flex-none">
-            <div class="flex justify-center" sec:authorize="!isAuthenticated()">
-                <a class="btn btn-outline btn-warning mr-4" href="member/join">
+            <div class="flex justify-center">
+                <a sec:authorize="!isAuthenticated()" class="btn btn-outline btn-warning mr-4" href="member/join">
                     <h3>회원가입</h3>
                 </a>
 
-                <!-- FIXME authorize 로그인 버튼 -->
-                <div sec:authorize="!isAuthenticated()">
-                    <a class="btn btn-outline btn-primary mr-4" th:href="@{/member/login}">
-                        <h3>로그인</h3>
-                    </a>
-                </div>
+                <a sec:authorize="!isAuthenticated()" class="btn btn-outline btn-primary mr-4"
+                   th:href="@{/member/login}">
+                    <h3>로그인</h3>
+                </a>
 
-                <!-- FIXME authorize 로그아웃 버튼 -->
-                <div sec:authorize="isAuthenticated()">
-                    <a class="btn btn-outline btn-primary mr-4" th:href="@{/member/logout}">
-                        <h3>로그아웃</h3>
-                    </a>
-                </div>
+                <a sec:authorize="isAuthenticated()" class="btn btn-outline btn-primary mr-4"
+                   th:href="@{/member/logout}">
+                    <h3>로그아웃</h3>
+                </a>
 
-                <a class="btn btn-outline btn-success mr-4" href="/cafe/create">
+                <a sec:authorize="isAuthenticated()" class="btn btn-outline btn-success mr-4" href="/cafe/create">
                     <h3>카페 만들기</h3>
                 </a>
-                <a class="btn btn-outline btn-info mr-4" href="#">
+
+                <a sec:authorize="isAuthenticated()" class="btn btn-outline btn-info mr-4" href="#">
                     <h3>게시물 작성하기</h3>
                 </a>
             </div>

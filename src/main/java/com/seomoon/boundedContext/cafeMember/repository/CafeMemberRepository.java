@@ -11,4 +11,6 @@ public interface CafeMemberRepository extends JpaRepository<CafeMember, Long> {
 
     Optional<CafeMember> findByLinkedMemberAndLinkedCafe(Member member, Cafe cafe);
 
+    int countByLinkedCafe(Cafe cafe);
+
 }

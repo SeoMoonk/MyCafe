@@ -9,14 +9,38 @@
 
     <div class="hero bg-base-200">
         <div class="hero-content flex-col lg:flex-row-reverse">
-            <div class="">
+            <div>
                 <h1 class="text-5xl font-bold" th:text="${cafe.cafeName}"></h1>
                 <p class="py-6" th:text="${cafe.introduction}"></p>
+
                 <!-- FIXME 로그인시에만 가입하기 버튼 보여야함-->
-                <a class="btn btn-primary" th:href="|/cafeMember/join?id=${cafe.id}|">가입하기</a>
+                <div th:unless="${isJoin}">
+                    <a class="btn btn-primary" th:href="|/cafeMember/join?id=${cafe.id}|">가입하기</a>
+                </div>
+
+                <div th:if="${isJoin}">
+                    <a class="btn btn-warning" href="#">탈퇴하기</a>
+                    <a class="btn btn-info" th:href="|/post/write?id=${cafe.id}|">게시물 작성</a>
+                </div>
+
+
+
+                <script th:inline="javascript" th:if="${failMsg}">
+                    window.onload = function () {
+                        alert(/*[[${failMsg}]]*/'');
+                    };
+                </script>
+
+                <script th:inline="javascript" th:if="${successMsg}">
+                    window.onload = function () {
+                        alert(/*[[${successMsg}]]*/'');
+                    };
+                </script>
+
             </div>
             <div>
-                <img src="https://kr.object.ncloudstorage.com/calocheck/sample/sample_img_no.png" class="w-2/3 rounded-lg shadow-2xl" />
+                <img src="https://kr.object.ncloudstorage.com/calocheck/sample/sample_img_no.png"
+                     class="w-2/3 rounded-lg shadow-2xl"/>
             </div>
         </div>
     </div>

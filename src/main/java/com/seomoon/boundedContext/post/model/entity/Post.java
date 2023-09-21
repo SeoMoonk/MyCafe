@@ -1,6 +1,8 @@
-package com.seomoon.boundedContext.post.entity;
+package com.seomoon.boundedContext.post.model.entity;
 
 import com.seomoon.base.entity.BaseEntity;
+import com.seomoon.boundedContext.cafe.model.entity.Cafe;
+import com.seomoon.boundedContext.member.model.entity.Member;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -18,15 +20,15 @@ public class Post extends BaseEntity {
 
     private String postTitle;
 
-    private String postContent;
+    private String markdownContent;
 
-    private String writer;
+    private String htmlContent;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    private Cafe linkedCafe;
-//
-//    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//    private Member member;
+    @ManyToOne
+    private Member linkedMember;
+
+    @ManyToOne
+    private Cafe linkedCafe;
 
 //    private Img postImg;
 

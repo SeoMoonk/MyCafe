@@ -1,0 +1,33 @@
+<html xmlns:layout="" data-theme="corporate">
+<head>
+    <th:block th:replace="~{common/fragments/config :: ConfigFragment}"/>
+    <title>Write Form</title>
+</head>
+<body>
+<th:block th:replace="~{common/fragments/header :: HeaderFragment}"/>
+<main class="flex content-center justify-center">
+    <div class="write-contents flex flex-col w-2/3">
+        <div class="post-write-header flex p-8 justify-center">
+                <span class="text-5xl">
+                    게시글 작성
+                </span>
+        </div>
+
+        <div class="post-write contents flex flex-col">
+            <input id="cafeId" name="cafeId" type="hidden" th:value="${cafeId}">
+            <input id="postTitle" name="postTitle" type="text" placeholder="제목을 입력해 주세요"
+                   class="mt-4 input input-bordered input-info"/>
+            <div class="mt-8 h-full" id="editor"></div>
+        </div>
+
+        <div class="post-write-btn flex flex-row justify-end mt-4 mb-4">
+            <a class="btn btn-success" onclick="writePost()">작성완료</a>
+            <a class="btn btn-error mx-4" onclick="history.go(-1)">작성취소</a>
+        </div>
+
+    </div>
+    <script src="/js/edit_default.js"></script>
+</main>
+<th:block th:replace="~{common/fragments/footer :: FooterFragment}"/>
+</body>
+</html>
