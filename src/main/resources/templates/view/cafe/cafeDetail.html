@@ -4,10 +4,22 @@
     <title>Detail Cafe</title>
 </head>
 <body>
-<main layout:fragment="Content">
-    <div th:if="${cafe}">
-        <input class="input" type="text" th:value="${cafe.cafeName}">
+<th:block th:replace="~{common/fragments/header :: HeaderFragment}"/>
+<main class="flex content-center">
+
+    <div class="hero bg-base-200">
+        <div class="hero-content flex-col lg:flex-row-reverse">
+            <div class="">
+                <h1 class="text-5xl font-bold" th:text="${cafe.cafeName}"></h1>
+                <p class="py-6" th:text="${cafe.introduction}"></p>
+                <button class="btn btn-primary">가입하기</button>
+            </div>
+            <div>
+                <img src="https://kr.object.ncloudstorage.com/calocheck/sample/sample_img_no.png" class="w-2/3 rounded-lg shadow-2xl" />
+            </div>
+        </div>
     </div>
 </main>
+<th:block th:replace="~{common/fragments/footer :: FooterFragment}"/>
 </body>
 </html>

@@ -4,7 +4,8 @@
     <title>로그인</title>
 </head>
 <body>
-<main layout:fragment="Content">
+<th:block th:replace="~{common/fragments/header :: HeaderFragment}"/>
+<main class="flex content-center">
     <form method="post" action="/member/login" class="flex justify-center">
         <div class="flex flex-col w-2/3 justify-center m-10">
             <span class="w-48">아이디</span>
@@ -27,5 +28,6 @@
         </div>
     </form>
 </main>
+<th:block th:replace="~{common/fragments/footer :: FooterFragment}"/>
 </body>
 </html>

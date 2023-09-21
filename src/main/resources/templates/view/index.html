@@ -4,41 +4,45 @@
     <title>Main</title>
 </head>
 <body>
-<main>
-    <th:block th:replace="~{common/fragments/header :: HeaderFragment}"/>
-
-    <div th:if="${#lists.isEmpty(cafeList)}">
-        <h3>아직 아무 카페도 없어요!</h3>
+<th:block th:replace="~{common/fragments/header :: HeaderFragment}"/>
+<main class="flex content-center justify-center">
+    <div class="flex justify-center" th:if="${#lists.isEmpty(cafeList)}">
+        <h3 class="font-sans text-3xl font-bold">아직 아무 카페도 없어요!</h3>
     </div>
 
-    <div class="ml-10 mb-10 grid grid-cols-1 md:grid-cols-3 xl:grid-cols-3 gap-[50px]" th:if="${cafeList}">
-        <div class="card w-72 bg-base-100 shadow-xl" th:each="cafe:${cafeList}">
-            <figure>
-                <a th:href="|/cafe/detail?id=${cafe.id}|">
-                    <img src="https://kr.object.ncloudstorage.com/calocheck/sample/sample_img_no.png"
-                         alt="cafeImage"/>
-                </a>
-            </figure>
-            <div class="divider"></div>
-            <div class="card-body">
-                <h2 class="card-title" th:text="${cafe.cafeName}"></h2>
-                <p th:text="${cafe.introduction}"></p>
-            </div>
-            <div class="card-actions justify-center mb-4">
-                <div class="badge badge-outline"
-                     th:text="${cafe.isOpen.getState() == 'public' ? '공개' : '비공개'}"></div>
-                <div class="badge badge-outline"
-                     th:text="${cafe.nameType.getNameType() == 'nickname' ? '닉네임' : '실명제'}"></div>
-                <div class="badge badge-outline" th:switch="${cafe.subject.getSubject()}">
-                    <span th:case="'travel'">여행</span>
-                    <span th:case="'food'">음식</span>
-                    <span th:case="'study'">공부</span>
+    <div th:if="${cafeList}">
+        <div class="flex justify-center">
+            <p class="font-sans text-3xl font-bold">카페 리스트</p>
+        </div>
+        <div class="ml-10 mb-10 grid grid-cols-1 md:grid-cols-3 xl:grid-cols-3 gap-[50px]">
+            <div class="card w-72 bg-base-100 shadow-xl" th:each="cafe:${cafeList}">
+                <figure>
+                    <a th:href="|/cafe/detail?id=${cafe.id}|">
+                        <!-- FIXME 카페 이미지로 변경 -->
+                        <img src="https://kr.object.ncloudstorage.com/calocheck/sample/sample_img_no.png"
+                             alt="cafeImage"/>
+                    </a>
+                </figure>
+                <div class="divider"></div>
+                <div class="card-body">
+                    <h2 class="card-title" th:text="${cafe.cafeName}"></h2>
+                    <p th:text="${cafe.introduction}"></p>
+                </div>
+                <div class="card-actions justify-center mb-4">
+                    <div class="badge badge-outline"
+                         th:text="${cafe.isOpen.getState() == 'public' ? '공개' : '비공개'}"></div>
+                    <div class="badge badge-outline"
+                         th:text="${cafe.nameType.getNameType() == 'nickname' ? '닉네임' : '실명제'}"></div>
+                    <div class="badge badge-outline" th:switch="${cafe.subject.getSubject()}">
+                        <span th:case="'travel'">여행</span>
+                        <span th:case="'food'">음식</span>
+                        <span th:case="'study'">공부</span>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <th:block th:replace="~{common/fragments/footer :: FooterFragment}"/>
 </main>
+<th:block th:replace="~{common/fragments/footer :: FooterFragment}"/>
 </body>
 </html>

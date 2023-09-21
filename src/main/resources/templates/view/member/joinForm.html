@@ -4,7 +4,8 @@
     <title>회원가입</title>
 </head>
 <body>
-<main layout:fragment="Content">
+<th:block th:replace="~{common/fragments/header :: HeaderFragment}"/>
+<main class="flex content-center">
     <form method="post" action="/member/join" class="flex justify-center"
           th:object="${memberJoinForm}">
         <div class="flex flex-col w-2/3 justify-center m-10">
@@ -32,5 +33,6 @@
         </div>
     </form>
 </main>
+<th:block th:replace="~{common/fragments/footer :: FooterFragment}"/>
 </body>
 </html>

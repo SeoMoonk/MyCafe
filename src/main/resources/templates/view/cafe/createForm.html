@@ -4,7 +4,8 @@
     <title>Create Cafe</title>
 </head>
 <body>
-<main layout:fragment="Content">
+<th:block th:replace="~{common/fragments/header :: HeaderFragment}"/>
+<main class="flex content-center">
     <form method="post" action="/cafe/create" class="flex justify-center">
         <div class="flex flex-col w-2/3 justify-center m-10">
             <span class="mt-10 w-48">카페명</span>
@@ -65,7 +66,7 @@
 
         </div>
     </form>
-
 </main>
+<th:block th:replace="~{common/fragments/footer :: FooterFragment}"/>
 </body>
 </html>
