@@ -7,7 +7,10 @@ import com.seomoon.boundedContext.cafe.model.cafeEnum.NameType;
 import com.seomoon.boundedContext.cafe.model.cafeEnum.OpenType;
 import com.seomoon.boundedContext.cafe.model.form.CafeCreateForm;
 import com.seomoon.boundedContext.cafe.repository.CafeRespository;
+import com.seomoon.boundedContext.cafeMember.model.role.Grade;
 import com.seomoon.boundedContext.cafeMember.service.CafeMemberService;
+import com.seomoon.boundedContext.member.model.entity.Member;
+import com.seomoon.boundedContext.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,10 +27,11 @@ public class CafeService {
 
     private final CafeRespository cafeRespository;
     private final CafeConfigProperties cafeConfigProps;
+    private final MemberService memberService;
     private final CafeMemberService cafeMemberService;
 
     @Transactional
-    public Map<String, String> createCafe(CafeCreateForm cafeCreateForm) {
+    public Map<String, String> createCafe(CafeCreateForm cafeCreateForm, String loginId) {
 
         String cafeName = cafeCreateForm.getCafeName();
         String introduction = cafeCreateForm.getIntroduction();
@@ -35,9 +39,11 @@ public class CafeService {
         NameType nameType = NameType.valueOf(cafeCreateForm.getNameType());
         CafeSubject subject = CafeSubject.valueOf(cafeCreateForm.getSubject());
 
-        Map<String, String> createResultMap = checkCreateCafe(cafeName);
+        Map<String, String> checkResultMap = checkCreateCafe(cafeName);
 
-        if (createResultMap.get("code").startsWith("S")) {
+        Member memberByLoginId = memberService.getMemberByLoginId(loginId);
+
+        if (checkResultMap.get("code").startsWith("S")) {
             Cafe newCafe = Cafe.builder()
                     .cafeName(cafeName)
                     .introduction(introduction)
@@ -48,9 +54,10 @@ public class CafeService {
                     .build();
 
             cafeRespository.save(newCafe);
+            cafeMemberService.joinCafe(memberByLoginId, newCafe, Grade.ADMIN);
         }
 
-        return createResultMap;
+        return checkResultMap;
     }
 
     public Map<String, String> checkCreateCafe(String cafeName) {

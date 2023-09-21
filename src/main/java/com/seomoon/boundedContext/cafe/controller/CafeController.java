@@ -3,7 +3,6 @@ package com.seomoon.boundedContext.cafe.controller;
 import com.seomoon.boundedContext.cafe.model.entity.Cafe;
 import com.seomoon.boundedContext.cafe.model.form.CafeCreateForm;
 import com.seomoon.boundedContext.cafe.service.CafeService;
-import com.seomoon.boundedContext.cafeMember.service.CafeMemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -38,14 +37,14 @@ public class CafeController {
                              BindingResult bindingResult,
                              Principal principal) {
 
-        String creatorUsername = principal.getName();
+        String loginId = principal.getName();
 
-        Map<String, String> createResultMap = cafeService.createCafe(cafeCreateForm);
+        Map<String, String> createResultMap = cafeService.createCafe(cafeCreateForm, loginId);
 
         if(createResultMap.get("code").startsWith("F")){
 
             String failCode = createResultMap.get("code");
-            String failMsg = createResultMap.get("msg").toString();
+            String failMsg = createResultMap.get("msg");
 
             bindingResult.reject("global.error", failCode + ": " + failMsg);
 
