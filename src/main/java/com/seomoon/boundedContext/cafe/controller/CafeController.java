@@ -6,6 +6,8 @@ import com.seomoon.boundedContext.cafe.service.CafeService;
 import com.seomoon.boundedContext.cafeMember.service.CafeMemberService;
 import com.seomoon.boundedContext.member.model.entity.Member;
 import com.seomoon.boundedContext.member.service.MemberService;
+import com.seomoon.boundedContext.post.model.entity.Post;
+import com.seomoon.boundedContext.post.service.PostService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -29,6 +32,7 @@ public class CafeController {
     private final CafeService cafeService;
     private final CafeMemberService cafeMemberService;
     private final MemberService memberService;
+    private final PostService postService;
 
     @GetMapping("/create")
     @PreAuthorize("isAuthenticated()")
@@ -71,6 +75,9 @@ public class CafeController {
 
         String loginId = principal.getName();
         Member memberByLoginId = memberService.getMemberByLoginId(loginId);
+
+        List<Post> postListByLinkedCafe = postService.getPostListByLinkedCafe(result);
+        model.addAttribute("postList", postListByLinkedCafe);
 
         //이미 가입중인 카페인지 아닌지 체크
         if(cafeMemberService.checkValidJoin(memberByLoginId, result).get("code")
