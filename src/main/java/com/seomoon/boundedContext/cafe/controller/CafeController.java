@@ -3,6 +3,7 @@ package com.seomoon.boundedContext.cafe.controller;
 import com.seomoon.boundedContext.cafe.model.entity.Cafe;
 import com.seomoon.boundedContext.cafe.model.form.CafeCreateForm;
 import com.seomoon.boundedContext.cafe.service.CafeService;
+import com.seomoon.boundedContext.cafeMember.service.CafeMemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.security.Principal;
 import java.util.Map;
 
 @Controller
@@ -33,14 +35,17 @@ public class CafeController {
     @PostMapping("/create")
     @PreAuthorize("isAuthenticated()")
     public String createCafe(@Valid CafeCreateForm cafeCreateForm,
-                             BindingResult bindingResult) {
+                             BindingResult bindingResult,
+                             Principal principal) {
+
+        String creatorUsername = principal.getName();
 
         Map<String, String> createResultMap = cafeService.createCafe(cafeCreateForm);
 
         if(createResultMap.get("code").startsWith("F")){
 
             String failCode = createResultMap.get("code");
-            String failMsg = createResultMap.get("msg");
+            String failMsg = createResultMap.get("msg").toString();
 
             bindingResult.reject("global.error", failCode + ": " + failMsg);
 
@@ -51,8 +56,7 @@ public class CafeController {
     }
 
     @GetMapping("/detail")
-    public String getCafeDetail(@RequestParam(value = "id") Long cafeId,
-                                Model model) {
+    public String getCafeDetail(@RequestParam(value = "id") Long cafeId, Model model) {
 
         Map<String, Object> getCafeMap = cafeService.getCafeById(cafeId);
 
@@ -64,8 +68,6 @@ public class CafeController {
 
             return "view/cafe/cafeDetail";
         }
-
-
     }
 
 }

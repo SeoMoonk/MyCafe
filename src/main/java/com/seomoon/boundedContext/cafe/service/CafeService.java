@@ -7,6 +7,7 @@ import com.seomoon.boundedContext.cafe.model.cafeEnum.NameType;
 import com.seomoon.boundedContext.cafe.model.cafeEnum.OpenType;
 import com.seomoon.boundedContext.cafe.model.form.CafeCreateForm;
 import com.seomoon.boundedContext.cafe.repository.CafeRespository;
+import com.seomoon.boundedContext.cafeMember.service.CafeMemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,9 +24,10 @@ public class CafeService {
 
     private final CafeRespository cafeRespository;
     private final CafeConfigProperties cafeConfigProps;
+    private final CafeMemberService cafeMemberService;
 
     @Transactional
-    public Map<String, String> createCafe(CafeCreateForm cafeCreateForm){
+    public Map<String, String> createCafe(CafeCreateForm cafeCreateForm) {
 
         String cafeName = cafeCreateForm.getCafeName();
         String introduction = cafeCreateForm.getIntroduction();
@@ -35,7 +37,7 @@ public class CafeService {
 
         Map<String, String> createResultMap = checkCreateCafe(cafeName);
 
-        if(createResultMap.get("code").startsWith("S")){
+        if (createResultMap.get("code").startsWith("S")) {
             Cafe newCafe = Cafe.builder()
                     .cafeName(cafeName)
                     .introduction(introduction)
@@ -60,9 +62,9 @@ public class CafeService {
 
         Optional<Cafe> ObyCafeName = cafeRespository.findByCafeName(cafeName);
 
-        if(ObyCafeName.isPresent()){
-           code = "F-1";
-           msg = "이미 사용중인 카페명 입니다.";
+        if (ObyCafeName.isPresent()) {
+            code = "F-1";
+            msg = "이미 사용중인 카페명 입니다.";
         }
 
         checkResultMap.put("code", code);
@@ -82,16 +84,15 @@ public class CafeService {
 
         Optional<Cafe> OCafeById = cafeRespository.findById(id);
 
-        if(OCafeById.isPresent()){
+        if (OCafeById.isPresent()) {
             getResultMap.put("code", "S-1");
             getResultMap.put("result", OCafeById.get());
-        } else{
+        } else {
             getResultMap.put("code", "F-1");
             getResultMap.put("result", null);
         }
 
         return getResultMap;
     }
-
 
 }

@@ -5,14 +5,15 @@
 </head>
 <body>
 <th:block th:replace="~{common/fragments/header :: HeaderFragment}"/>
-<main class="flex content-center">
+<main class="flex content-center justify-center">
 
     <div class="hero bg-base-200">
         <div class="hero-content flex-col lg:flex-row-reverse">
             <div class="">
                 <h1 class="text-5xl font-bold" th:text="${cafe.cafeName}"></h1>
                 <p class="py-6" th:text="${cafe.introduction}"></p>
-                <button class="btn btn-primary">가입하기</button>
+                <!-- FIXME 로그인시에만 가입하기 버튼 보여야함-->
+                <a class="btn btn-primary" th:href="|/cafeMember/join?id=${cafe.id}|">가입하기</a>
             </div>
             <div>
                 <img src="https://kr.object.ncloudstorage.com/calocheck/sample/sample_img_no.png" class="w-2/3 rounded-lg shadow-2xl" />

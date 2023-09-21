@@ -5,17 +5,19 @@
 </head>
 <body>
 <th:block th:replace="~{common/fragments/header :: HeaderFragment}"/>
-<main class="flex content-center">
-    <form method="post" action="/cafe/create" class="flex justify-center">
-        <div class="flex flex-col w-2/3 justify-center m-10">
+<main class="flex content-center justify-center">
+    <form method="post" action="/cafe/create" class="flex flex-col justify-center">
+        <div class="flex flex-col justify-center mb-10">
             <span class="mt-10 w-48">카페명</span>
             <input class="input input-bordered" type="text" name="cafeName">
 
             <span class="mt-10 inline-flex w-48">카페 소개</span>
             <textarea placeholder="카페를 소개해 주세요." name="introduction"
                       class="textarea textarea-bordered textarea-lg w-full"></textarea>
+        </div>
 
-            <div class="mt-10 outline">
+        <div class="flex">
+            <div class="mx-4">
                 <span class="mt-4 ml-8 inline-flex w-48">카페 공개 여부</span>
                 <div class="divider h-min"></div>
                 <label class="label cursor-pointer">
@@ -29,7 +31,7 @@
                 </label>
             </div>
 
-            <div class="mt-10 outline">
+            <div class="mx-4" >
                 <span class="mt-4 ml-8 inline-flex w-48">카페 이름 설정</span>
                 <div class="divider h-min"></div>
                 <label class="m-2 label cursor-pointer">
@@ -54,17 +56,16 @@
                         <option value="STUDY">공부</option>
                     </select>
                 </label>
-
             </div>
-
-            <div class="mt-10 flex flex-col">
-                <div class="flex justify-center">
-                    <button class="w-36 btn btn-outline" type="submit">카페 생성</button>
-                    <a class="ml-10 w-36 btn btn-outline btn-warning" href="/">생성 취소</a>
-                </div>
-            </div>
-
         </div>
+
+        <div class="flex mt-10 flex flex-col">
+            <div class="flex justify-center">
+                <button class="w-36 btn btn-outline" type="submit">카페 생성</button>
+                <a class="ml-10 w-36 btn btn-outline btn-warning" href="/">생성 취소</a>
+            </div>
+        </div>
+
     </form>
 </main>
 <th:block th:replace="~{common/fragments/footer :: FooterFragment}"/>

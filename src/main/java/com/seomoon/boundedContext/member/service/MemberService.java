@@ -79,4 +79,9 @@ public class MemberService {
         return resultMap;
     }
 
+    public Member getMemberByLoginId(String loginId) {
+
+        return memberRepository.findByLoginId(loginId).get();
+    }
+
 }
