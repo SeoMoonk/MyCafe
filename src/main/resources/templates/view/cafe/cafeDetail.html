@@ -1,0 +1,13 @@
+<html xmlns:layout="" data-theme="corporate">
+<head>
+    <th:block th:replace="~{common/fragments/config :: ConfigFragment}"/>
+    <title>Detail Cafe</title>
+</head>
+<body>
+<main layout:fragment="Content">
+    <div th:if="${cafe}">
+        <input class="input" type="text" th:value="${cafe.cafeName}">
+    </div>
+</main>
+</body>
+</html>

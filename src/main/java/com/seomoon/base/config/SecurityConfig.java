@@ -1,4 +1,4 @@
-package com.seomoon.boundedContext.member.config;
+package com.seomoon.base.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

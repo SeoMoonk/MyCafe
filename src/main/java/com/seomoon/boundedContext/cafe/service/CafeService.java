@@ -76,5 +76,22 @@ public class CafeService {
         return cafeRespository.findAll();
     }
 
+    public Map<String, Object> getCafeById(Long id) {
+
+        Map<String, Object> getResultMap = new HashMap<>();
+
+        Optional<Cafe> OCafeById = cafeRespository.findById(id);
+
+        if(OCafeById.isPresent()){
+            getResultMap.put("code", "S-1");
+            getResultMap.put("result", OCafeById.get());
+        } else{
+            getResultMap.put("code", "F-1");
+            getResultMap.put("result", null);
+        }
+
+        return getResultMap;
+    }
+
 
 }
