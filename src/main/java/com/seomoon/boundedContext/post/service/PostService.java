@@ -7,10 +7,12 @@ import com.seomoon.boundedContext.post.model.dto.PostWriteRequest;
 import com.seomoon.boundedContext.post.model.entity.Post;
 import com.seomoon.boundedContext.post.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -39,6 +41,19 @@ public class PostService {
         postRepository.save(newPost);
 
         return newPost.getId();
+    }
+
+    public Post getPostById(Long postId) {
+
+        Optional<Post> ObyId = postRepository.findById(postId);
+
+        if(ObyId.isPresent()){
+            return ObyId.get();
+        } else{
+            //FIXME
+            return null;
+        }
+
     }
 
 }

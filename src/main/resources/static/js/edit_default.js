@@ -77,7 +77,7 @@ function writePost(e) {
         .then(
             (data) => {
                 alert("포스트 작성이 완료되었습니다.");
-                location.replace(`/post/detail/${data.postId}`);
+                location.replace(`/post/detail?id=`+`${data.postId}`);
             }
         )
         .catch(
