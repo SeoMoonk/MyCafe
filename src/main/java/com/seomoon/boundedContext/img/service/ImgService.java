@@ -22,10 +22,10 @@ public class ImgService {
 
         String baseUrl = "";
 
-        if(imgTarget.equals(ImgTarget.CAFE_IMG)){
-            baseUrl = "C:/work/source/java_intellij/mycafe/src/main/resources/static/img/cafeImg/";
+        if (imgTarget.equals(ImgTarget.CAFE_IMG)) {
+            baseUrl = "src/main/resources/static/img/cafeImg/";
         } else {
-            baseUrl = "C:/work/source/java_intellij/mycafe/src/main/resources/static/img/postImg/";
+            baseUrl = "src/main/resources/static/img/postImg/";
         }
 
         Map<String, String> uploadResultMap = new HashMap<>();
@@ -33,14 +33,15 @@ public class ImgService {
         String msg = "이미지 파일이 아닙니다.";
         String result = imgConfigProps.getDefaultImg();
 
-        if(!uploadfile.isEmpty()){
-
+        if (!uploadfile.isEmpty()) {
             String fType = StringUtils.getFilenameExtension(uploadfile.getOriginalFilename());
 
-            if(fType.equals("jpg") || fType.equals("png") || fType.equals("jpeg")
+            if (fType.equals("jpg") || fType.equals("png") || fType.equals("jpeg")
                     || fType.equals("JPG") || fType.equals("PNG") || fType.equals("JPEG")) {
 
-                File newFileName = new File(baseUrl + uploadfile.getOriginalFilename());
+                String projectRoot = System.getProperty("user.dir"); // 현재 작업 디렉토리(프로젝트 루트 디렉토리)
+
+                File newFileName = new File(projectRoot + "/" + baseUrl + uploadfile.getOriginalFilename());
 
                 uploadfile.transferTo(newFileName);
 
@@ -48,7 +49,7 @@ public class ImgService {
 
                 code = "S-1";
                 msg = "이미지 업로드에 성공하였습니다";
-                result = split[1];
+                result = split[1]; // 상대 경로로 저장된 파일의 경로
             }
         }
 
@@ -58,5 +59,4 @@ public class ImgService {
 
         return uploadResultMap;
     }
-
 }

@@ -12,6 +12,8 @@ spring:
     username: seomoon
     password: 1234
     driver-class-name: com.mysql.cj.jdbc.Driver
+  profiles:
+    active: dev
   #Tymeleaf
   thymeleaf:
     prefix: classpath:/templates/
@@ -39,6 +41,7 @@ logging:
       hibernate: info
       thymeleaf: off
 
+#custom
 custom:
   cafe:
     member_limit: 100

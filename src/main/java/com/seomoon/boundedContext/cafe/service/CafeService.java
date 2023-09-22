@@ -9,6 +9,7 @@ import com.seomoon.boundedContext.cafe.model.form.CafeCreateForm;
 import com.seomoon.boundedContext.cafe.repository.CafeRespository;
 import com.seomoon.boundedContext.cafeMember.model.role.Grade;
 import com.seomoon.boundedContext.cafeMember.service.CafeMemberService;
+import com.seomoon.boundedContext.img.config.ImgConfigProps;
 import com.seomoon.boundedContext.img.model.ImgTarget;
 import com.seomoon.boundedContext.img.service.ImgService;
 import com.seomoon.boundedContext.member.model.entity.Member;
@@ -34,6 +35,7 @@ public class CafeService {
     private final MemberService memberService;
     private final CafeMemberService cafeMemberService;
     private final ImgService imgService;
+    private final ImgConfigProps imgConfigProps;
 
     @Transactional
     public Map<String, String> createCafe(CafeCreateForm cafeCreateForm, String loginId) throws IOException {
@@ -60,9 +62,14 @@ public class CafeService {
                     .memberLimit(cafeConfigProps.getMemberLimit())
                     .build();
 
-            Map<String, String> uploadResultMap = imgService.imgSaveInLocal(cafeImg, ImgTarget.CAFE_IMG);
+            if(cafeImg == null){
+                //for notprod
+                newCafe.setImgUrl(imgConfigProps.getDefaultImg());
+            } else {
+                Map<String, String> uploadResultMap = imgService.imgSaveInLocal(cafeImg, ImgTarget.CAFE_IMG);
 
-            newCafe.setImgUrl(uploadResultMap.get("result"));
+                newCafe.setImgUrl(uploadResultMap.get("result"));
+            }
 
             cafeRespository.save(newCafe);
             cafeMemberService.joinCafe(memberByLoginId, newCafe, Grade.ADMIN);

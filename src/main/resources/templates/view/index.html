@@ -41,7 +41,7 @@
         </div>
         <div class="ml-10 mb-10 grid grid-cols-1 md:grid-cols-3 xl:grid-cols-3 gap-[50px]">
             <div class="card w-72 bg-base-100 shadow-xl" th:each="cafe:${cafeList}">
-                <figure>
+                <figure class="w-72 h-48">
                     <a th:href="|/cafe/detail?id=${cafe.id}|">
                         <img th:src="${cafe.imgUrl}" alt="cafeImage"/>
                     </a>
