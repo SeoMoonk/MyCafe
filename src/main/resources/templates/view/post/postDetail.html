@@ -19,11 +19,33 @@
             <div class="flex flex-col justify-center">
                 <img src="https://kr.object.ncloudstorage.com/calocheck/sample/sample_img_no.png"
                      class="rounded-lg shadow-2xl"/>
+
+                <p class="my-4 flex justify-center" th:if="${cafe.nameType.getNameType() == 'nickname'}"
+                th:text="'작성자 : '+${post.linkedMember.getNickname()}"></p>
+
+                <p class="my-4 flex justify-center" th:unless="${cafe.nameType.getNameType() == 'nickname'}"
+                   th:text="'작성자 : '+${post.linkedMember.getLoginId()}"></p>
+
                 <a class="btn btn-primary" href="#">삭제하기</a>
                 <a class="btn btn-warning" href="#">수정하기</a>
             </div>
 
             <div class="flex flex-col w-full">
+                <div class="flex flex-row">
+                    <h3 class="text-2xl font-bold mb-4" th:text="'<Cafe>'+ ${cafeName}"></h3>
+                    <div class="inline-flex ml-2 mt-2 gap-2">
+                        <div class="badge badge-outline"
+                             th:text="${cafe.isOpen.getState() == 'public' ? '공개' : '비공개'}"></div>
+                        <div class="badge badge-outline"
+                             th:text="${cafe.nameType.getNameType() == 'nickname' ? '닉네임' : '실명제'}"></div>
+                        <div class="badge badge-outline" th:switch="${cafe.subject.getSubject()}">
+                            <span th:case="'travel'">여행</span>
+                            <span th:case="'food'">음식</span>
+                            <span th:case="'study'">공부</span>
+                        </div>
+                    </div>
+                </div>
+
                 <h1 class="text-5xl font-bold mb-4" th:text="${post.postTitle}"></h1>
                 <p id="postContent" class="py-6"></p>
             </div>

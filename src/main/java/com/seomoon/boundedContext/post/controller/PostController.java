@@ -49,7 +49,11 @@ public class PostController {
 
         Post postById = postService.getPostById(postId);
 
+        String cafeName = postById.getLinkedCafe().getCafeName();
+
         model.addAttribute("post", postById);
+        model.addAttribute("cafeName", cafeName);
+        model.addAttribute("cafe", postById.getLinkedCafe());
 
         return "/view/post/postDetail";
     }

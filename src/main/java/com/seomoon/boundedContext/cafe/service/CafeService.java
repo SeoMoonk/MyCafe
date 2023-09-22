@@ -102,4 +102,6 @@ public class CafeService {
         return getResultMap;
     }
 
+
+
 }
