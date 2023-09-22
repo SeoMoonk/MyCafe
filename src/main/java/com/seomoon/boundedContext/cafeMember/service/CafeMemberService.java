@@ -64,4 +64,9 @@ public class CafeMemberService {
         return findResultMap;
     }
 
+    public Integer getCountMemberByLinkedCafe(Cafe linkedCafe) {
+
+        return cafeMemberRepository.countByLinkedCafe(linkedCafe);
+    }
+
 }

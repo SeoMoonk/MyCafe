@@ -1,4 +1,4 @@
-package com.seomoon.boundedContext.home;
+package com.seomoon.boundedContext.home.controller;
 
 import com.seomoon.boundedContext.cafe.model.entity.Cafe;
 import com.seomoon.boundedContext.cafe.service.CafeService;

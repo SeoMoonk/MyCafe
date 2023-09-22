@@ -1,5 +1,6 @@
 package com.seomoon.boundedContext.cafe.controller;
 
+import com.seomoon.boundedContext.cafe.config.CafeConfigProperties;
 import com.seomoon.boundedContext.cafe.model.entity.Cafe;
 import com.seomoon.boundedContext.cafe.model.form.CafeCreateForm;
 import com.seomoon.boundedContext.cafe.service.CafeService;
@@ -18,8 +19,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
 import java.util.Map;
@@ -33,6 +34,7 @@ public class CafeController {
     private final CafeMemberService cafeMemberService;
     private final MemberService memberService;
     private final PostService postService;
+    private final CafeConfigProperties cafeConfigProperties;
 
     @GetMapping("/create")
     @PreAuthorize("isAuthenticated()")
@@ -45,7 +47,7 @@ public class CafeController {
     @PreAuthorize("isAuthenticated()")
     public String createCafe(@Valid CafeCreateForm cafeCreateForm,
                              BindingResult bindingResult,
-                             Principal principal) {
+                             Principal principal) throws IOException {
 
         String loginId = principal.getName();
 
@@ -75,6 +77,11 @@ public class CafeController {
 
         String loginId = principal.getName();
         Member memberByLoginId = memberService.getMemberByLoginId(loginId);
+
+        Integer memberLimit = cafeConfigProperties.getMemberLimit();
+        Integer memberCount = cafeMemberService.getCountMemberByLinkedCafe(result);
+        model.addAttribute("memberLimit", memberLimit);
+        model.addAttribute("memberCount", memberCount);
 
         List<Post> postListByLinkedCafe = postService.getPostListByLinkedCafe(result);
         model.addAttribute("postList", postListByLinkedCafe);

@@ -43,9 +43,7 @@
             <div class="card w-72 bg-base-100 shadow-xl" th:each="cafe:${cafeList}">
                 <figure>
                     <a th:href="|/cafe/detail?id=${cafe.id}|">
-                        <!-- FIXME 카페 이미지로 변경 -->
-                        <img src="https://kr.object.ncloudstorage.com/calocheck/sample/sample_img_no.png"
-                             alt="cafeImage"/>
+                        <img th:src="${cafe.imgUrl}" alt="cafeImage"/>
                     </a>
                 </figure>
                 <div class="divider"></div>

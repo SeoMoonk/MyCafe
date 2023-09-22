@@ -4,6 +4,7 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 @Data
 @AllArgsConstructor
@@ -20,5 +21,7 @@ public class PostWriteRequest {
     private Long cafeId;
 
     private Long postId;
+
+    private MultipartFile postImg;
 
 }

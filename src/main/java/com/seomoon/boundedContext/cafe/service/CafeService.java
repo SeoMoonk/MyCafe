@@ -9,12 +9,16 @@ import com.seomoon.boundedContext.cafe.model.form.CafeCreateForm;
 import com.seomoon.boundedContext.cafe.repository.CafeRespository;
 import com.seomoon.boundedContext.cafeMember.model.role.Grade;
 import com.seomoon.boundedContext.cafeMember.service.CafeMemberService;
+import com.seomoon.boundedContext.img.model.ImgTarget;
+import com.seomoon.boundedContext.img.service.ImgService;
 import com.seomoon.boundedContext.member.model.entity.Member;
 import com.seomoon.boundedContext.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,21 +33,24 @@ public class CafeService {
     private final CafeConfigProperties cafeConfigProps;
     private final MemberService memberService;
     private final CafeMemberService cafeMemberService;
+    private final ImgService imgService;
 
     @Transactional
-    public Map<String, String> createCafe(CafeCreateForm cafeCreateForm, String loginId) {
+    public Map<String, String> createCafe(CafeCreateForm cafeCreateForm, String loginId) throws IOException {
 
         String cafeName = cafeCreateForm.getCafeName();
         String introduction = cafeCreateForm.getIntroduction();
         OpenType openType = OpenType.valueOf(cafeCreateForm.getOpenType());
         NameType nameType = NameType.valueOf(cafeCreateForm.getNameType());
         CafeSubject subject = CafeSubject.valueOf(cafeCreateForm.getSubject());
+        MultipartFile cafeImg = cafeCreateForm.getCafeImg();
 
         Map<String, String> checkResultMap = checkCreateCafe(cafeName);
 
         Member memberByLoginId = memberService.getMemberByLoginId(loginId);
 
         if (checkResultMap.get("code").startsWith("S")) {
+
             Cafe newCafe = Cafe.builder()
                     .cafeName(cafeName)
                     .introduction(introduction)
@@ -52,6 +59,10 @@ public class CafeService {
                     .subject(subject)
                     .memberLimit(cafeConfigProps.getMemberLimit())
                     .build();
+
+            Map<String, String> uploadResultMap = imgService.imgSaveInLocal(cafeImg, ImgTarget.CAFE_IMG);
+
+            newCafe.setImgUrl(uploadResultMap.get("result"));
 
             cafeRespository.save(newCafe);
             cafeMemberService.joinCafe(memberByLoginId, newCafe, Grade.ADMIN);
@@ -101,7 +112,4 @@ public class CafeService {
 
         return getResultMap;
     }
-
-
-
 }

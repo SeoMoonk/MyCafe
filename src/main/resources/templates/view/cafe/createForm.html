@@ -6,7 +6,7 @@
 <body>
 <th:block th:replace="~{common/fragments/header :: HeaderFragment}"/>
 <main class="flex content-center justify-center">
-    <form method="post" action="/cafe/create" class="flex flex-col justify-center">
+    <form method="post" action="/cafe/create" class="flex flex-col justify-center" enctype="multipart/form-data">
         <div class="flex flex-col justify-center mb-10">
             <span class="mt-10 w-48">카페명</span>
             <input class="input input-bordered" type="text" name="cafeName">
@@ -14,6 +14,12 @@
             <span class="mt-10 inline-flex w-48">카페 소개</span>
             <textarea placeholder="카페를 소개해 주세요." name="introduction"
                       class="textarea textarea-bordered textarea-lg w-full"></textarea>
+
+            <div class="mt-10 flex justify-center">
+                <span class="mt-4 w-48">카페 이미지(구현 X)</span>
+                <input type="file" class="file-input file-input-bordered file-input-secondary w-full max-w-xs"
+                       name="cafeImg"/>
+            </div>
         </div>
 
         <div class="flex">

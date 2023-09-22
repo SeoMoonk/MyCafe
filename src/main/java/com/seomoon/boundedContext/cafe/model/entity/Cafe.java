@@ -31,6 +31,8 @@ public class Cafe extends BaseEntity {
 
     private int memberLimit;
 
+    private String imgUrl;
+
 //    @OneToMany(mappedBy = "linkedCafe")
 //    private List<Post> cafePostList;
 
