@@ -86,3 +86,50 @@ function writePost(e) {
             }
         )
 }
+
+function modifyPost(e) {
+
+    // DOM (document)
+    const headerName = document.querySelector("meta[name='_csrf_header']").getAttribute("content");
+    const tokenValue = document.querySelector("meta[name='_csrf']").getAttribute("content");
+
+    // 제목
+    const postTitle = document.querySelector("#postTitle").value;
+
+    // 포스트의 내용
+    const htmlBody = editor.getHTML();
+    const markdownBody = editor.getMarkdown();
+
+    //포스트ID
+    const postId = document.querySelector("#postId").value;
+
+    const data = {
+        "title": postTitle,
+        htmlBody,
+        markdownBody,
+        postId
+    };
+
+    fetch("http://localhost:8080/post/modify", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            [headerName]: tokenValue
+        },
+        body: JSON.stringify(data)
+    })
+        .then(
+            (resp) => resp.json()
+        )
+        .then(
+            (data) => {
+                alert("포스트 수정이 완료되었습니다.");
+                location.replace(`/post/detail?id=`+`${data.postId}`);
+            }
+        )
+        .catch(
+            (err) => {
+                console.log(err);
+            }
+        )
+}

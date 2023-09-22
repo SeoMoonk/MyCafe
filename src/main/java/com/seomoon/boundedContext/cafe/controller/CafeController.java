@@ -79,10 +79,14 @@ public class CafeController {
         List<Post> postListByLinkedCafe = postService.getPostListByLinkedCafe(result);
         model.addAttribute("postList", postListByLinkedCafe);
 
+        //FIXME 컨트롤러에 서비스같은 로직이 너무 많음.
+
         //이미 가입중인 카페인지 아닌지 체크
         if(cafeMemberService.checkValidJoin(memberByLoginId, result).get("code")
                 .equals("F-1")){
             model.addAttribute("isJoin", true);
+        } else{
+            model.addAttribute("isJoin", false);
         }
 
         if(!failMsg.equals("none")){

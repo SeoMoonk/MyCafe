@@ -24,11 +24,11 @@
                 </div>
 
                 <!-- FIXME 로그인시에만 가입하기 버튼 보여야함-->
-                <div th:unless="${isJoin}">
+                <div class="flex justify-center" th:unless="${isJoin}">
                     <a class="btn btn-primary" th:href="|/cafeMember/join?id=${cafe.id}|">가입하기</a>
                 </div>
 
-                <div th:if="${isJoin}">
+                <div class="flex justify-center gap-3" th:if="${isJoin}">
                     <a class="btn btn-warning" href="#">탈퇴하기</a>
                     <a class="btn btn-info" th:href="|/post/write?id=${cafe.id}|">게시물 작성</a>
                 </div>
@@ -41,28 +41,62 @@
         </div>
     </div>
 
-    <div class="flex flex-col" th:if="${#lists.isEmpty(postList)}">
-        <h1>아직 카페에 게시글이 하나도 없습니다!</h1>
+    <div class="flex my-10 w-full h-full justify-center" th:if="${cafe.isOpen.getState() != 'public' and !isJoin}">
+        <div class="card w-96 bg-base-100 shadow-xl">
+            <div class="card-body">
+                <div class="card-actions justify-center">
+                    <button class="btn btn-square btn-sm">
+                        <i class="fa-solid fa-lock"></i>
+                    </button>
+                </div>
+                <p class="my-4 flex justify-center text-xl font-extrabold">비공개 카페 입니다.</p>
+            </div>
+        </div>
     </div>
 
-    <div class="flex flex-col my-10" th:unless="${#lists.isEmpty(postList)}">
-        <div class="flex justify-center my-4">
-            <p class="font-sans text-3xl font-bold">게시글 리스트</p>
+    <div th:if="${cafe.isOpen.getState() == 'public' or isJoin}">
+        <div class="flex flex-col" th:if="${#lists.isEmpty(postList)}">
+            <div class="flex my-10 w-full h-full justify-center">
+                <div class="card w-96 bg-base-100 shadow-xl">
+                    <div class="card-body">
+                        <div class="card-actions justify-center">
+                            <button class="btn btn-square btn-sm">
+                                <i class="fa-solid fa-copy"></i>
+                            </button>
+                        </div>
+                        <p class="my-4 flex justify-center text-xl font-extrabold">아직 카페에 게시글이 없습니다!</p>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="ml-10 mb-10 grid grid-cols-1 md:grid-cols-3 xl:grid-cols-3 gap-[30px]" >
-            <div th:each="post:${postList}" class="card w-72 bg-neutral text-neutral-content">
-                <div class="card-body items-center text-center">
-                    <h2 class="card-title" th:text="${post.postTitle}"></h2>
-                    <div class="card-actions justify-end">
-                        <a class="btn btn-primary" th:href="|/post/detail?id=${post.id}|">보러가기</a>
-                        <a class="btn btn-error" href="#">
-                            <i class="fa-regular fa-heart"></i>좋아요
-                        </a>
+
+        <div class="flex flex-col my-10" th:unless="${#lists.isEmpty(postList)}">
+            <div class="flex justify-center my-4">
+                <p class="font-sans text-3xl font-bold">게시글 리스트</p>
+            </div>
+            <div class="ml-10 mb-10 grid grid-cols-1 md:grid-cols-3 xl:grid-cols-3 gap-[30px]" >
+                <div th:each="post:${postList}" class="card w-72 bg-neutral text-neutral-content">
+                    <div class="card-body items-center text-center">
+                        <h2 class="card-title" th:text="${post.postTitle}"></h2>
+                        <div>
+                            <p class="my-4 flex justify-center" th:if="${cafe.nameType.getNameType() == 'nickname'}"
+                               th:text="'작성자 : '+${post.linkedMember.getNickname()}"></p>
+                            <p class="my-4 flex justify-center" th:unless="${cafe.nameType.getNameType() == 'nickname'}"
+                               th:text="'작성자 : '+${post.linkedMember.getLoginId()}"></p>
+                        </div>
+                        <div class="card-actions justify-end">
+                            <a class="btn btn-primary" th:href="|/post/detail?id=${post.id}|">보러가기</a>
+                            <a class="btn btn-error" href="#">
+                                <i class="fa-regular fa-heart"></i>좋아요
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+
 
     <script th:inline="javascript" th:if="${failMsg}">
         window.onload = function () {

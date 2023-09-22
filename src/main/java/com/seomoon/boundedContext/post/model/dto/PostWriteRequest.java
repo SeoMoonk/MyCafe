@@ -19,4 +19,6 @@ public class PostWriteRequest {
 
     private Long cafeId;
 
+    private Long postId;
+
 }

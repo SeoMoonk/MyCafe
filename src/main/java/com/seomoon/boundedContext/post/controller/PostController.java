@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -45,7 +46,9 @@ public class PostController {
     }
 
     @GetMapping("/detail")
-    public String postDetail(@RequestParam(value="id")Long postId, Model model) {
+    public String postDetail(@RequestParam(value="id")Long postId, Model model, Principal principal) {
+
+        String loginId = principal.getName();
 
         Post postById = postService.getPostById(postId);
 
@@ -54,8 +57,44 @@ public class PostController {
         model.addAttribute("post", postById);
         model.addAttribute("cafeName", cafeName);
         model.addAttribute("cafe", postById.getLinkedCafe());
+        model.addAttribute("loginId", loginId);
 
         return "/view/post/postDetail";
+    }
+
+    @GetMapping("/delete")
+    public String delete(@RequestParam(value="id") Long postId, Principal principal) {
+
+        String loginId = principal.getName();
+
+        Post postById = postService.getPostById(postId);
+
+        Long cafeId = postById.getLinkedCafe().getId();
+
+        postService.deletePost(postById, loginId);
+
+        return "redirect:/cafe/detail?id=" + cafeId;
+    }
+
+    @GetMapping("/modify")
+    public String getModifyForm(@RequestParam(value="id") Long postId, Model model) {
+        Post postById = postService.getPostById(postId);
+        model.addAttribute("post", postById);
+
+        return "/view/post/modifyForm";
+    }
+
+    @ResponseBody
+    @PostMapping("/modify")
+    public PostResultDto modifyPost(@RequestBody @Valid PostWriteRequest postWriteRequest, Principal principal) {
+
+        String loginId = principal.getName();
+
+        Member writer = memberService.getMemberByLoginId(loginId);
+
+        Long modifiedPostId = postService.modifyPost(postWriteRequest, writer);
+
+        return new PostResultDto(modifiedPostId);
     }
 
 }

@@ -14,6 +14,16 @@
         });
     </script>
 
+    <script th:inline="javascript">
+        function deletePost(postId) {
+            if (confirm('정말로 삭제하시겠습니까?')) {
+                location.href = "/post/delete?id=" + postId;
+            } else {
+                alert("삭제가 취소되었습니다.");
+            }
+        }
+    </script>
+
     <div class="hero bg-base-200">
         <div class="hero-content flex-col lg:flex-row-reverse">
             <div class="flex flex-col justify-center">
@@ -26,13 +36,15 @@
                 <p class="my-4 flex justify-center" th:unless="${cafe.nameType.getNameType() == 'nickname'}"
                    th:text="'작성자 : '+${post.linkedMember.getLoginId()}"></p>
 
-                <a class="btn btn-primary" href="#">삭제하기</a>
-                <a class="btn btn-warning" href="#">수정하기</a>
+                <div class="flex justify-center gap-3" th:if="${loginId.equals(post.linkedMember.getLoginId())}">
+                    <a class="btn btn-primary" th:attr="onclick='deletePost(\'' + ${post.id} + '\')'">삭제하기</a>
+                    <a class="btn btn-warning" th:href="|/post/modify?id=${post.id}|">수정하기</a>
+                </div>
             </div>
 
             <div class="flex flex-col w-full">
                 <div class="flex flex-row">
-                    <h3 class="text-2xl font-bold mb-4" th:text="'<Cafe>'+ ${cafeName}"></h3>
+                    <h3 class="text-2xl font-bold mb-4" th:text="${cafeName}"></h3>
                     <div class="inline-flex ml-2 mt-2 gap-2">
                         <div class="badge badge-outline"
                              th:text="${cafe.isOpen.getState() == 'public' ? '공개' : '비공개'}"></div>
