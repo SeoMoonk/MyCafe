@@ -27,7 +27,7 @@ public class NotProd {
             @Transactional
             public void run(String... args) throws Exception {
 
-
+/*
                 //loginId, password1 and 2, nickname
                 String[] loginIdList = {"user1", "user2", "user3", "user4", "admin"};
                 String password = "1234";
@@ -44,6 +44,8 @@ public class NotProd {
                     memberService.createMember(newJoinForm);
                 }
 
+ */
+
                 /*
                 //INTRODUCTION, OPENTYPE NAMETYPE SUBJECT IMG
                 String[] cafeNameList = {"강아지 카페", "고양이 카페", "여행 카페", "JAVA 공부 카페", "성북구 맛집 카페"};
@@ -59,6 +61,7 @@ public class NotProd {
                 String[] subjectList = { "STUDY", "STUDY", "TRAVEL", "STUDY", "FOOD"};
                 String[] creatorList = { "user1", "user2", "user3", "user4", "user5"};
 
+                //FIXME how resolve MultipartFile ?? => 곤란
                 MultipartFile emptyFile = null;
 
                 for(int i=0; i<5; i++) {

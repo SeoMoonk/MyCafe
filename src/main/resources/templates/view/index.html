@@ -6,37 +6,29 @@
 <body>
 <th:block th:replace="~{common/fragments/header :: HeaderFragment}"/>
 <main class="flex flex-col content-center justify-center">
-    <div class="flex justify-center h-1/2">
-        <div class="carousel w-2/3">
-            <div id="item1" class="carousel-item w-full">
-                <img src="/img/cafe.jpg" class="w-full" />
-            </div>
-            <div id="item2" class="carousel-item w-full">
-                <img src="/img/study.jpg" class="w-full" />
-            </div>
-            <div id="item3" class="carousel-item w-full">
-                <img src="/img/travel.jpg" class="w-full" />
-            </div>
-            <div id="item4" class="carousel-item w-full">
-                <img src="/img/hologram.jpg" class="w-full">
+    <div class="flex justify-center content-center h-1/2">
+        <div class="carousel w-96">
+            <div th:each="cafe, sequence:${cafeList}" th:id="'item' + ${sequence.index}" class="carousel-item w-full">
+                <a th:href="|/cafe/detail?id=${cafe.id}|">
+                    <img th:src="${cafe.imgUrl}" class="w-full" />
+                </a>
             </div>
         </div>
     </div>
 
-
     <div class="flex justify-center w-full py-2 gap-2">
-        <a href="#item1" class="btn btn-xs btn-neutral">1</a>
-        <a href="#item2" class="btn btn-xs btn-neutral">2</a>
-        <a href="#item3" class="btn btn-xs btn-neutral">3</a>
-        <a href="#item4" class="btn btn-xs btn-neutral">4</a>
+        <a th:each="cafe, sequence:${cafeList}" th:href="'#item'+${sequence.index}"
+           class="btn btn-xs btn-neutral" th:text="${sequence.index}+1"></a>
     </div>
+
+
 
     <div class="flex justify-center" th:if="${#lists.isEmpty(cafeList)}">
         <h3 class="font-sans text-3xl font-bold">아직 아무 카페도 없어요!</h3>
     </div>
 
     <div th:unless="${#lists.isEmpty(cafeList)}">
-        <div class="flex justify-center">
+        <div class="flex justify-center my-10">
             <p class="font-sans text-3xl font-bold">카페 리스트</p>
         </div>
         <div class="ml-10 mb-10 grid grid-cols-1 md:grid-cols-3 xl:grid-cols-3 gap-[50px]">

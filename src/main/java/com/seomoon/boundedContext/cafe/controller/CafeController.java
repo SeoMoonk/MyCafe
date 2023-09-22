@@ -103,6 +103,7 @@ public class CafeController {
         }
 
         if(getCafeMap.get("code").toString().startsWith("F")){
+            //FIXME 에러페이지로 내가 보낸다는게 말이 되나
             return "/error";
         } else{
             model.addAttribute("cafe", result);
