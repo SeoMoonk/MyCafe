@@ -8,10 +8,9 @@ server:
 # Database config
 spring:
   datasource:
-
-    url: jdbc:mysql://localhost:3306/mycafe?useUnicode=true&characterEncoding=utf8
+    url: jdbc:mysql://host.docker.internal:3306/mycafe?useUnicode=true&characterEncoding=utf8
     username: seomoon
-    password: 1234
+    password: Seomoon123414
     driver-class-name: com.mysql.cj.jdbc.Driver
   profiles:
     active: dev
