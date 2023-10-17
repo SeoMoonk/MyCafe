@@ -7,7 +7,6 @@ import com.seomoon.boundedContext.post.model.dto.PostWriteRequest;
 import com.seomoon.boundedContext.post.model.entity.Post;
 import com.seomoon.boundedContext.post.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

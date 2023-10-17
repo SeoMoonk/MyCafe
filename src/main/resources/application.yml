@@ -8,18 +8,13 @@ server:
 # Database config
 spring:
   datasource:
+
     url: jdbc:mysql://localhost:3306/mycafe?useUnicode=true&characterEncoding=utf8
     username: seomoon
     password: 1234
     driver-class-name: com.mysql.cj.jdbc.Driver
   profiles:
     active: dev
-  #Tymeleaf
-  thymeleaf:
-    prefix: classpath:/templates/
-    cache: false
-    suffix: .html
-    mode: HTML5
   jpa:
     database: mysql
     database-platform: org.hibernate.dialect.MySQLDialect
